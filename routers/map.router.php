@@ -125,9 +125,9 @@ function route($method, $urlData, $formData) {
     }
 
     // Отфильтрованные деревья
-    // POST /map/tree/filter
-    if ($method === 'POST' && count($urlData) === 2 && $urlData[0] === "tree" && $urlData[1] === "filter") {
-        $result = getFilteredTrees($formData);
+    // POST /map/tree/filter/page/{pageId}
+    if ($method === 'POST' && count($urlData) === 4 && $urlData[0] === "tree" && $urlData[1] === "filter" && $urlData[2] === "page") {
+        $result = getFilteredTrees($formData, $urlData[3]);
         echo json_encode($result);
         return;
     }

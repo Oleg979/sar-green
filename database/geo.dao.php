@@ -273,7 +273,7 @@ function getAmountTreesAndShrubsByAreaId($objectId, $areaNumber) {
     }
 }    
 // Получить отфильтрованные деревья
-function getFilteredTrees($filters) {
+function getFilteredTrees($filters, $pageNumber) {
     $sql = constructFilterQueryForTrees($filters);
     writeToServerLog($sql);
     $stmt = Connection::get()->query($sql);
@@ -284,7 +284,9 @@ function getFilteredTrees($filters) {
             $result[$i] = $row;
         }
     }
-    
+    if($pageNumber) {
+        $result  = array_slice($result, $pageNumber * 50, 50);
+    }
     return $result;
 }
 // Получить отфильтрованные цветники
