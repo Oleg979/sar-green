@@ -124,7 +124,7 @@ function route($method, $urlData, $formData) {
         return;
     }
 
-    // Отфильтрованные деревья
+    // Отфильтрованные деревья с пагинацией
     // POST /map/tree/filter/page/{pageId}
     if ($method === 'POST' && count($urlData) === 4 && $urlData[0] === "tree" && $urlData[1] === "filter" && $urlData[2] === "page") {
         $result = getFilteredTrees($formData, $urlData[3]);
@@ -132,10 +132,26 @@ function route($method, $urlData, $formData) {
         return;
     }
 
+    // Отфильтрованные деревья
+    // POST /map/tree/filter
+    if ($method === 'POST' && count($urlData) === 2 && $urlData[0] === "tree" && $urlData[1] === "filter") {
+        $result = getFilteredTrees($formData, null);
+        echo json_encode($result);
+        return;
+    }
+
+    // Отфильтрованные цветники с пагинацией
+    // POST /map/flowerGardens/filter/page/{pageId}
+    if ($method === 'POST' && count($urlData) === 4 && $urlData[0] === "flowerGardens" && $urlData[1] === "filter" && $urlData[2] === "page") {
+        $result = getFilteredFlowerGardens($formData, $urlData[3]);
+        echo json_encode($result);
+        return;
+    }
+
     // Отфильтрованные цветники
     // POST /map/flowerGardens/filter
     if ($method === 'POST' && count($urlData) === 2 && $urlData[0] === "flowerGardens" && $urlData[1] === "filter") {
-        $result = getFilteredFlowerGardens($formData);
+        $result = getFilteredFlowerGardens($formData, null);
         echo json_encode($result);
         return;
     }

@@ -290,7 +290,7 @@ function getFilteredTrees($filters, $pageNumber) {
     return $result;
 }
 // Получить отфильтрованные цветники
-function getFilteredFlowerGardens($filters) {
+function getFilteredFlowerGardens($filters, $pageNumber) {
     $sql = constructFilterQueryForFlowerGardens($filters);
     writeToServerLog($sql);
     $stmt = Connection::get()->query($sql);
@@ -310,6 +310,9 @@ function getFilteredFlowerGardens($filters) {
             }
         }
         return $resultFinal;
+    }
+    if($pageNumber) {
+        $result  = array_slice($result, $pageNumber * 50, 50);
     }
     return $result;
 }
