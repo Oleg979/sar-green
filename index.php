@@ -62,6 +62,7 @@ include_once 'database/glossary.dao.php';
 include_once 'database/geo.dao.php';
 include_once 'database/debug.dao.php';
 include_once 'database/admin.dao.php';
+include_once 'database/users.dao.php';
 
 // Подключаем вспомогательные файлы
 include_once "utils/upload.php";

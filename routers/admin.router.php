@@ -263,6 +263,54 @@ function route($method, $urlData, $formData) {
         return;
     }
 
+    // Получить список пользователей
+    // GET /users
+    if ($method === 'GET' && count($urlData) === 1 && $urlData[0] === "users") {
+        $result = getUsers();
+        echo json_encode($result);
+        return;
+    }
+
+    // Выдать пользователю права админа
+    // GET /users/grant/{userId}
+    if ($method === 'GET' && count($urlData) === 1 && $urlData[0] === "users" && $urlData[1] === "grant") {
+        $result = grantAdminRights($urlData[2]);
+        echo json_encode([
+            "success" => true,
+        ]);
+        return;
+    }
+
+    // Лишить пользователя прав админа
+    // GET /users/revoke/{userId}
+    if ($method === 'GET' && count($urlData) === 3 && $urlData[0] === "users" && $urlData[1] === "revoke") {
+        $result = revokeAdminRights($urlData[2]);
+        eecho json_encode([
+            "success" => true,
+        ]);
+        return;
+    }
+
+    // Удалить пользователя
+    // GET /users/delete/{userId}
+    if ($method === 'GET' && count($urlData) === 3 && $urlData[0] === "users" && $urlData[1] === "delete") {
+        $result = deleteUser($urlData[2]);
+        echo json_encode([
+            "success" => true,
+        ]);
+        return;
+    }
+
+    // Добавить пользователя
+    // POST /users/add
+    if ($method === 'POST' && count($urlData) === 2 && $urlData[0] === "users" && $urlData[1] === "add") {
+        $result = addUser($formData["name"], $formData["password"]]);
+        echo json_encode([
+            "success" => true,
+        ]);
+        return;
+    }
+
     // Возвращаем ошибку
     header('HTTP/1.0 400 Bad Request');
     echo json_encode(array(
