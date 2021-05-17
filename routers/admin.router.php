@@ -273,7 +273,7 @@ function route($method, $urlData, $formData) {
 
     // Выдать пользователю права админа
     // GET /users/grant/{userId}
-    if ($method === 'GET' && count($urlData) === 1 && $urlData[0] === "users" && $urlData[1] === "grant") {
+    if ($method === 'GET' && count($urlData) === 3 && $urlData[0] === "users" && $urlData[1] === "grant") {
         $result = grantAdminRights($urlData[2]);
         echo json_encode([
             "success" => true,
@@ -285,7 +285,7 @@ function route($method, $urlData, $formData) {
     // GET /users/revoke/{userId}
     if ($method === 'GET' && count($urlData) === 3 && $urlData[0] === "users" && $urlData[1] === "revoke") {
         $result = revokeAdminRights($urlData[2]);
-        eecho json_encode([
+        echo json_encode([
             "success" => true,
         ]);
         return;
@@ -304,7 +304,7 @@ function route($method, $urlData, $formData) {
     // Добавить пользователя
     // POST /users/add
     if ($method === 'POST' && count($urlData) === 2 && $urlData[0] === "users" && $urlData[1] === "add") {
-        $result = addUser($formData["name"], $formData["password"]]);
+        $result = addUser($formData["name"], $formData["password"]);
         echo json_encode([
             "success" => true,
         ]);
