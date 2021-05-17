@@ -34,7 +34,7 @@ function revokeAdminRights($id) {
 }
 // Добавить нового пользователя
 function addUser($name, $pass) {
-    $stmt = Connection::get()->query('insert into users (username, password) values ('.$name.', '.$pass.')');
+    $stmt = Connection::get()->query("insert into users (username, password) values ('".$name."', '".$pass."')");
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         var_dump($row);
     }
