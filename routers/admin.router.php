@@ -311,6 +311,14 @@ function route($method, $urlData, $formData) {
         return;
     }
 
+    // Добавить пользователя
+    // POST /users/auth
+    if ($method === 'POST' && count($urlData) === 2 && $urlData[0] === "users" && $urlData[1] === "auth") {
+        $result = auth($formData["name"], $formData["password"]);
+        echo json_encode($result);
+        return;
+    }
+
     // Возвращаем ошибку
     header('HTTP/1.0 400 Bad Request');
     echo json_encode(array(

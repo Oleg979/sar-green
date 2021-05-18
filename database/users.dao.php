@@ -39,3 +39,23 @@ function addUser($name, $pass) {
         var_dump($row);
     }
 }
+// Авторизовать пользователя
+function auth($name, $pass) {
+    $stmt = Connection::get()->query("select * from users where username = '".$name."'");
+    $result = [];
+    while($rows = $stmt->fetchAll(PDO::FETCH_ASSOC)) {
+        for ($i = 0; $i < count($rows); $i++) {
+            $row = $rows[$i];
+            $result[$i] = $row;
+        }
+    }
+    $user = $result[0];
+    if($user) {
+        if($user["password"] == $pass) {
+            return (["success" => true]);
+        } else {
+            return (["success" => false, "error" => "Wrong password"]);
+        }
+    }
+    return (["success" => false, "error" => "User does not exits"]);
+}
