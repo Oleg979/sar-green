@@ -50,6 +50,13 @@ function getTreesCount() {
         return $row;
     }
 }
+// Количество цветников
+function getFlowerGardensCount() {
+    $stmt = Connection::get()->query('select count(*) from flowerGardensAllData');
+    while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        return $row;
+    }
+}
 // Статистика по состоянию дереьвев
 function getTreesStat() {
     $stmt_good = Connection::get()->query('select count(*) from treesandshrubsalldataonlyfortrees where "lifestatuscategory" LIKE \'%Хорошее%\'');

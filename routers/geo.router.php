@@ -53,6 +53,14 @@ function route($method, $urlData, $formData) {
         return;
     }
 
+    // Получение информации о деревьях
+    // GET /geo/flowersAndGardens/count
+    if ($method === 'GET' && count($urlData) === 2 && $urlData[0] === "flowersAndGardens" && $urlData[1] === "count") {
+        $result = getFlowerGardensCount();
+        echo json_encode($result);
+        return;
+    }
+
     // Получение информации о цветах
     // GET /geo/flowers
     if ($method === 'GET' && count($urlData) === 1 && $urlData[0] === "flowers") {
