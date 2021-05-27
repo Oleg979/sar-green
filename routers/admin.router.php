@@ -301,7 +301,7 @@ function route($method, $urlData, $formData) {
         return;
     }
 
-    // Добавить пользователя
+    // Зарегистрировать пользователя
     // POST /users/add
     if ($method === 'POST' && count($urlData) === 2 && $urlData[0] === "users" && $urlData[1] === "add") {
         $result = addUser($formData["name"], $formData["password"]);
@@ -311,10 +311,18 @@ function route($method, $urlData, $formData) {
         return;
     }
 
-    // Добавить пользователя
+    // Авторизация пользователя
     // POST /users/auth
     if ($method === 'POST' && count($urlData) === 2 && $urlData[0] === "users" && $urlData[1] === "auth") {
         $result = auth($formData["name"], $formData["password"]);
+        echo json_encode($result);
+        return;
+    }
+
+    // Разлогнинить пользователя
+    // POST /users/logout
+    if ($method === 'GET' && count($urlData) === 2 && $urlData[0] === "users" && $urlData[1] === "logout") {
+        $result = logout();
         echo json_encode($result);
         return;
     }

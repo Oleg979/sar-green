@@ -53,6 +53,7 @@ $urls = explode('/', $url);
 $router = $urls[0];
 $urlData = array_slice($urls, 1);
 
+
 // Подключаем файл-роутер
 include_once 'routers/' . $router . '.router.php';
 
@@ -68,6 +69,16 @@ include_once 'database/users.dao.php';
 include_once "utils/upload.php";
 include_once "utils/construct-query.php";
 include_once "utils/log.php";
+include_once 'utils/auth.interceptor.php';
+
+// Подключить систему авторизации
+if($router == "admin" && $urlData[1] !== "auth") {
+    $authResult = executeAuthInterceptor();
+    if(!$authResult["success"]) {
+        echo json_encode($authResult);
+        return;
+    }
+}
 
 // Запускаем нужный роутер
 route($method, $urlData, $formData);

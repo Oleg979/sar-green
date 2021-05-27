@@ -32,9 +32,10 @@ function revokeAdminRights($id) {
         var_dump($row);
     }
 }
-// Добавить нового пользователя
+// Зарегистрировать нового пользователя
 function addUser($name, $pass) {
-    $stmt = Connection::get()->query("insert into users (username, password) values ('".$name."', '".$pass."')");
+    $hashedPass = md5(md5(trim($pass)));
+    $stmt = Connection::get()->query("insert into users (username, password) values ('".$name."', '".$hashedPass."')");
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         var_dump($row);
     }
@@ -51,11 +52,38 @@ function auth($name, $pass) {
     }
     $user = $result[0];
     if($user) {
-        if($user["password"] == $pass) {
+        if($user["password"] == md5(md5(trim($pass)))) {
+            $hash = md5(generateCode(10));
+            $stmt = Connection::get()->query("update users set hash = '".$hash."' where username = '".$name."'");
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                var_dump($row);
+            }
+            setcookie("id", $user["id"], time()+60*60*24*30, "/");
+            setcookie("hash", $hash, time()+60*60*24*30, "/", null, null, true);
             return (["success" => true]);
         } else {
             return (["success" => false, "error" => "Wrong password"]);
         }
     }
     return (["success" => false, "error" => "User does not exits"]);
+}
+// Разлогинить пользователя
+function logout() {
+    if (isset($_COOKIE['id']) and isset($_COOKIE['hash'])) {
+        setcookie("id", "", time() - 3600*24*30*12, "/");
+        setcookie("hash", "", time() - 3600*24*30*12, "/", null, null, true);
+        return (["success" => true]); 
+    } else {
+        return (["success" => false, "error" => "No Cookies"]);
+    }
+}
+// Вспомогательная функция для генерация случайной соли хеша
+function generateCode($length=6) {
+    $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHI JKLMNOPRQSTUVWXYZ0123456789";
+    $code = "";
+    $clen = strlen($chars) - 1;
+    while (strlen($code) < $length) {
+            $code .= $chars[mt_rand(0,$clen)];
+    }
+    return $code;
 }
