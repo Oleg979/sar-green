@@ -20,14 +20,14 @@ function deleteUser($id) {
 }
 // Выдать пользователю права админа
 function grantAdminRights($id) {
-    $stmt = Connection::get()->query('update users set isAdmin = 1 where id = '.$id);
+    $stmt = Connection::get()->query('update users set isadmin = 1 where id = '.$id);
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         var_dump($row);
     }
 }
 // Лишить пользователя прав админа
 function revokeAdminRights($id) {
-    $stmt = Connection::get()->query('update users set isAdmin = 0 where id = '.$id);
+    $stmt = Connection::get()->query('update users set isadmin = 0 where id = '.$id);
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         var_dump($row);
     }
