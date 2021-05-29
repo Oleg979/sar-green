@@ -60,7 +60,7 @@ function auth($name, $pass) {
             }
             setcookie("id", $user["id"], time()+60*60*24*30, "/");
             setcookie("hash", $hash, time()+60*60*24*30, "/", null, null, true);
-            return (["success" => true]);
+            return (["success" => true, "isAdmin" => $user["isadmin"]]);
         } else {
             return (["success" => false, "error" => "Wrong password"]);
         }
