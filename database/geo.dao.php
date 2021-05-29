@@ -291,6 +291,8 @@ function getFilteredTrees($filters, $pageNumber) {
             $result[$i] = $row;
         }
     }
+    writeToServerLog(json_encode($result));
+    $pageNumber--;
     if($pageNumber) {
         $result  = array_slice($result, $pageNumber * 50, 50);
     }
@@ -318,6 +320,7 @@ function getFilteredFlowerGardens($filters, $pageNumber) {
         }
         return $resultFinal;
     }
+    $pageNumber--;
     if($pageNumber) {
         $result  = array_slice($result, $pageNumber * 50, 50);
     }

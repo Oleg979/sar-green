@@ -71,14 +71,14 @@ include_once "utils/construct-query.php";
 include_once "utils/log.php";
 include_once 'utils/auth.interceptor.php';
 
-// Подключить систему авторизации
+/* // Подключить систему авторизации
 if($router == "admin" && $urlData[1] !== "auth") {
     $authResult = executeAuthInterceptor();
     if(!$authResult["success"]) {
         echo json_encode($authResult);
         return;
     }
-}
+} */
 
 // Запускаем нужный роутер
 route($method, $urlData, $formData);
