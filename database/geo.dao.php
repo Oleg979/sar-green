@@ -57,6 +57,13 @@ function getFlowerGardensCount() {
         return $row;
     }
 }
+// Получить цветник по айди
+function getFlowerGardenById($id) {
+    $stmt = Connection::get()->query('select * from flowergardensalldata where "flowerGardensId" = '.$id);
+    while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        return $row;
+    }
+}
 // Статистика по состоянию дереьвев
 function getTreesStat() {
     $stmt_good = Connection::get()->query('select count(*) from treesandshrubsalldataonlyfortrees where "lifestatuscategory" LIKE \'%Хорошее%\'');

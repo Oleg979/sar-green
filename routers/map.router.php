@@ -156,6 +156,14 @@ function route($method, $urlData, $formData) {
         return;
     }
 
+    // Отфильтрованные цветники
+    // GET /map/flowerGardens/{id}
+    if ($method === 'GET' && count($urlData) === 2 && $urlData[0] === "flowerGardens") {
+        $result = getFlowerGardenById($urlData[1]);
+        echo json_encode($result);
+        return;
+    }
+
     // Возвращаем ошибку
     header('HTTP/1.0 400 Bad Request');
     echo json_encode(array(
