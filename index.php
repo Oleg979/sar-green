@@ -4,7 +4,8 @@
 error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE);
 
 // Получение данных из тела запроса
-function getFormData($method) {
+function getFormData($method)
+{
 
     // GET или POST: данные возвращаем как есть
     if ($method === 'GET') return $_GET;
@@ -18,7 +19,7 @@ function getFormData($method) {
     $data = array();
     $exploded = explode('&', file_get_contents('php://input'));
 
-    foreach($exploded as $pair) {
+    foreach ($exploded as $pair) {
         $item = explode('=', $pair);
         if (count($item) == 2) {
             $data[urldecode($item[0])] = urldecode($item[1]);
@@ -36,7 +37,7 @@ header("Access-Control-Allow-Headers: X-Requested-With");
 // Определяем метод запроса
 $method = $_SERVER['REQUEST_METHOD'];
 
-if($method === "OPTIONS") {
+if ($method === "OPTIONS") {
     header("HTTP/1.1 200 OK");
     return;
 }
@@ -70,15 +71,21 @@ include_once "utils/upload.php";
 include_once "utils/construct-query.php";
 include_once "utils/log.php";
 include_once 'utils/auth.interceptor.php';
+include_once "utils/report.php";
 
-/* // Подключить систему авторизации
-if($router == "admin" && $urlData[1] !== "auth") {
+// Подключить систему авторизации
+if ($router == "admin" && $urlData[1] !== "auth") {
     $authResult = executeAuthInterceptor();
-    if(!$authResult["success"]) {
+    if (!$authResult["success"]) {
         echo json_encode($authResult);
         return;
     }
-} */
+}
+
+// Подключить систему генерации отчётов
+if ($router == "report") {
+    generateReport();
+}
 
 // Запускаем нужный роутер
 route($method, $urlData, $formData);

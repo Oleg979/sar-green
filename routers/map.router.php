@@ -1,5 +1,4 @@
 <?php
-
 // Роутер для справочной информации
 function route($method, $urlData, $formData) {
     header('Content-Type: application/json');
