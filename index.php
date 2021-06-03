@@ -72,7 +72,7 @@ include_once "utils/construct-query.php";
 include_once "utils/log.php";
 include_once 'utils/auth.interceptor.php';
 
-// Для Кати: закомменти если не работает авторизация
+// Для Кати: закомменти если ничего не работает
 if ($router == "admin" && $urlData[1] !== "auth") {
     $authResult = executeAuthInterceptor();
     if (!$authResult["success"]) {
