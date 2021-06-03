@@ -71,21 +71,16 @@ include_once "utils/upload.php";
 include_once "utils/construct-query.php";
 include_once "utils/log.php";
 include_once 'utils/auth.interceptor.php';
-include_once "utils/report.php";
 
-// Подключить систему авторизации
-if ($router == "admin" && $urlData[1] !== "auth") {
+ // Подключить систему авторизации
+/* if ($router == "admin" && $urlData[1] !== "auth") {
     $authResult = executeAuthInterceptor();
     if (!$authResult["success"]) {
         echo json_encode($authResult);
         return;
     }
-}
+} */
 
-// Подключить систему генерации отчётов
-if ($router == "report") {
-    generateReport();
-}
 
 // Запускаем нужный роутер
 route($method, $urlData, $formData);

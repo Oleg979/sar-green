@@ -30,6 +30,17 @@ function route($method, $urlData, $formData) {
         return;
     }
 
+    // Получаем отчёт
+    // GET upload/report/{name}
+    if ($method === 'GET' && count($urlData) === 2 && $urlData[0] == "report") {
+        $file_out = "report-generator/Report_".$urlData[0].".docx";
+            $image_info = getimagesize($file_out);
+            header('Content-Type: ' . $image_info['mime']);
+            header('Content-Length: ' . filesize($file_out));
+            readfile($file_out);
+        return;
+    }
+
 
     // Возвращаем ошибку
     header('HTTP/1.0 400 Bad Request');

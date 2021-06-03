@@ -1,3 +1,4 @@
 /uploads/*
 /logs/*
 /vendor/*
+/report-generator/node_modules/*
