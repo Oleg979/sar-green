@@ -73,13 +73,13 @@ include_once "utils/log.php";
 include_once 'utils/auth.interceptor.php';
 
 // Для Кати: закомменти если ничего не работает
-if ($router == "admin" && $urlData[1] !== "auth") {
+/*if ($router == "admin" && $urlData[1] !== "auth") {
     $authResult = executeAuthInterceptor();
     if (!$authResult["success"]) {
         echo json_encode($authResult);
         return;
     }
-}
+}*/
 
 
 // Запускаем нужный роутер
